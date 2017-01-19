@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.mlaz.api</groupId>
-	<artifactId><LAZ/artifactId>
+	<artifactId>MLAZ</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>mlaz</name>
-	<description>FXDasboard</description>
+	<description>MLAZ API</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
