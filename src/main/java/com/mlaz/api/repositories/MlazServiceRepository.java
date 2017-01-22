@@ -6,6 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import com.mlaz.api.model.MlazService;
 
 @EnableScan
-public interface MlazServerRepository extends CrudRepository<MlazService, String> {
+public interface MlazServiceRepository extends CrudRepository<MlazService, String> {
 
 }
