@@ -21,6 +21,11 @@ public class MlazServiceRepositoryTest {
 	@Test
 	public void createOneService() {
 		MlazService mlService = new MlazService();
+		mlService.setName("Dọn nhà cửa");
+		mlService.setUnit("m2");
+		mlService.setDescription("Dịch vụ lau dọn, vệ sinh nhà cửa");
+		mlService.setCreatedAt(System.currentTimeMillis());
+		mlService.setLastModified(mlService.getCreatedAt());
 		MlazService actualService = mlazServiceRepositoryl.save(mlService);
 		Assert.assertEquals("Fail to insert new MLAZ service", mlService, actualService);
 	}
