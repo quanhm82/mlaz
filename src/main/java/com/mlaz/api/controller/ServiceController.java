@@ -3,7 +3,6 @@ package com.mlaz.api.controller;
 import com.mlaz.api.model.MlazService;
 import com.mlaz.api.repositories.MlazServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 /**
