@@ -28,7 +28,7 @@ public class ServiceController {
     }
 
     @RequestMapping(value = "services/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable("id") String id, Model model) {
+    public void delete(@PathVariable("id") String id) {
         mlazServiceRepository.delete(id);
     }
 }
