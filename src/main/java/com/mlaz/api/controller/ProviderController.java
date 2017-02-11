@@ -4,8 +4,10 @@ import com.mlaz.api.model.MlazProvider;
 //import com.mlaz.api.model.MlazProviderToService;
 //import com.mlaz.api.model.MlazService;
 import com.mlaz.api.model.MlazProviderToService;
+import com.mlaz.api.model.MlazService;
 import com.mlaz.api.repositories.MlazProviderRepository;
 import com.mlaz.api.repositories.MlazProviderToServiceRepository;
+import com.mlaz.api.repositories.MlazServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +26,9 @@ public class ProviderController {
 
     @Autowired
     private MlazProviderToServiceRepository mlazProviderToServiceRepository;
+
+    @Autowired
+    private MlazServiceRepository mlazServiceRepository;
 
     @RequestMapping(value = "providers", method = RequestMethod.GET)
     public Iterable<MlazProvider> list() {
@@ -44,11 +49,11 @@ public class ProviderController {
     }
 
     @RequestMapping(value = "providers/getAllServices/{id}", method = RequestMethod.GET)
-    public Iterable<MlazProvider> list(@PathVariable("id") String providerId) {
+    public Iterable<MlazService> list(@PathVariable("id") String providerId) {
         List<MlazProviderToService> mlazProviderToServices = mlazProviderToServiceRepository.findByProviderId(providerId);
-        
-        return  mlazProviderRepository.findAll(
-                mlazProviderToServices.stream().map(x -> x.getId()).collect(Collectors.toList()));
+
+        return mlazServiceRepository.findAll(
+                mlazProviderToServices.stream().map(x -> x.getServiceId()).collect(Collectors.toList()));
     }
 
     @RequestMapping(value = "providers/addService", method = RequestMethod.POST)

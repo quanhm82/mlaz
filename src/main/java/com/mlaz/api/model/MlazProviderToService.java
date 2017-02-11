@@ -1,5 +1,6 @@
 package com.mlaz.api.model;
 
+import com.amazonaws.SystemDefaultDnsResolver;
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 
 import java.math.BigDecimal;
@@ -22,11 +23,15 @@ public class MlazProviderToService {
 
     private Long lastModified;
 
+    public MlazProviderToService() {};
+
     public MlazProviderToService(String providerId, String serviceId, BigDecimal fee) {
         this.providerId = providerId;
         this.serviceId = serviceId;
         this.fee = fee;
 
+        this.createAt = System.currentTimeMillis();
+        this.lastModified = System.currentTimeMillis();
     }
 
     @DynamoDBHashKey
