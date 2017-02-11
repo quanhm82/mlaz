@@ -1,14 +1,17 @@
 package com.mlaz.api.controller;
 
 import com.mlaz.api.model.MlazProvider;
+//import com.mlaz.api.model.MlazProviderToService;
+//import com.mlaz.api.model.MlazService;
 import com.mlaz.api.model.MlazProviderToService;
-import com.mlaz.api.model.MlazService;
 import com.mlaz.api.repositories.MlazProviderRepository;
 import com.mlaz.api.repositories.MlazProviderToServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by jimmy on 5/2/17.
@@ -17,10 +20,10 @@ import java.math.BigDecimal;
 public class ProviderController {
 
     @Autowired
-    MlazProviderRepository mlazProviderRepository;
+    private MlazProviderRepository mlazProviderRepository;
 
     @Autowired
-    MlazProviderToServiceRepository mlazProviderToServiceRepository;
+    private MlazProviderToServiceRepository mlazProviderToServiceRepository;
 
     @RequestMapping(value = "providers", method = RequestMethod.GET)
     public Iterable<MlazProvider> list() {
@@ -40,10 +43,13 @@ public class ProviderController {
         mlazProviderRepository.delete(id);
     }
 
-    //@RequestMapping(value = "providers/getAllServices/{id}", method = RequestMethod.GET)
-    //public Iterable<MlazService> list(@PathVariable("id") String providerId) {
-    //    return mlazProviderToServiceRepository.findServicesByProviderId(providerId);
-    //}
+    @RequestMapping(value = "providers/getAllServices/{id}", method = RequestMethod.GET)
+    public Iterable<MlazProvider> list(@PathVariable("id") String providerId) {
+        List<MlazProviderToService> mlazProviderToServices = mlazProviderToServiceRepository.findByProviderId(providerId);
+        
+        return  mlazProviderRepository.findAll(
+                mlazProviderToServices.stream().map(x -> x.getId()).collect(Collectors.toList()));
+    }
 
     @RequestMapping(value = "providers/addService", method = RequestMethod.POST)
     public MlazProviderToService add(@RequestParam("providerId") String providerId, @RequestParam("serviceId") String serviceId,
@@ -65,8 +71,8 @@ public class ProviderController {
     @RequestMapping(value = "providers/deleteService/{providerId}/{serviceId}")
     public void deleteService(@PathVariable("providerId") String providerId, @PathVariable("serviceId") String serviceId){
 
-        MlazProviderToService obj = mlazProviderToServiceRepository.findByProviderAndService(providerId, serviceId);
+        List<MlazProviderToService> obj = mlazProviderToServiceRepository.findByProviderIdAndServiceId(providerId, serviceId);
 
-        mlazProviderToServiceRepository.delete(obj);
+        mlazProviderToServiceRepository.delete(obj.get(0));
     }
 }
