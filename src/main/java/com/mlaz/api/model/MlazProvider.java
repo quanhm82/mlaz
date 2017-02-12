@@ -16,21 +16,23 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
 /**
  * Created by jimmy on 5/2/17.
+ * For common info like first/last name, address, email ... will be
+ * stored in referenced user (refUser)
  */
 @DynamoDBTable(tableName = "MLProvider")
 public class MlazProvider {
 
     private String id;
 
-    private String firstName;
+    private String firstName; //TODO: will be referenced to MlazUser
 
-    private String lastName;
+    private String lastName; //TODO: will be referenced to MlazUser
 
     private String identity;
 
-    private String address;
+    private String address; //TODO: will be referenced to MlazUser
 
-    private String phone;
+    private String phone; //TODO: will be referenced to MlazUser
 
     private Long createdAt;
 
