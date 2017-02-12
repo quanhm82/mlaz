@@ -17,7 +17,7 @@ public class MlazProviderToService {
 
     private String serviceId;
 
-    private BigDecimal fee;
+    private Double fee;
 
     private Long createAt;
 
@@ -25,7 +25,7 @@ public class MlazProviderToService {
 
     public MlazProviderToService() {};
 
-    public MlazProviderToService(String providerId, String serviceId, BigDecimal fee) {
+    public MlazProviderToService(String providerId, String serviceId, Double fee) {
         this.providerId = providerId;
         this.serviceId = serviceId;
         this.fee = fee;
@@ -63,11 +63,11 @@ public class MlazProviderToService {
     }
 
     @DynamoDBAttribute
-    public BigDecimal getFee() {
+    public Double getFee() {
         return fee;
     }
 
-    public void setFee(BigDecimal fee) {
+    public void setFee(Double fee) {
         this.fee = fee;
     }
 

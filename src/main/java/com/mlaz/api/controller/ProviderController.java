@@ -58,13 +58,13 @@ public class ProviderController {
 
     @RequestMapping(value = "providers/addService", method = RequestMethod.POST)
     public MlazProviderToService add(@RequestParam("providerId") String providerId, @RequestParam("serviceId") String serviceId,
-                                     @RequestParam("fee")BigDecimal fee){
+                                     @RequestParam("fee")Double fee){
         MlazProviderToService providerToService = new MlazProviderToService(providerId, serviceId, fee);
         return mlazProviderToServiceRepository.save(providerToService);
     }
 
     @RequestMapping(value = "providers/updateService", method = RequestMethod.POST)
-    public MlazProviderToService updateService(@RequestParam("id") String id, @RequestParam("fee") BigDecimal fee){
+    public MlazProviderToService updateService(@RequestParam("id") String id, @RequestParam("fee") Double fee){
 
         MlazProviderToService mlazProviderToService = mlazProviderToServiceRepository.findOne(id);
         mlazProviderToService.setFee(fee);
