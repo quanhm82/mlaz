@@ -32,6 +32,9 @@ public class MlazMarketPrice {
 		this.averageFee = averageFee;
 		
 		this.status = "NEW";
+
+        this.createAt = System.currentTimeMillis();
+        this.lastModified = System.currentTimeMillis();
 	}
 
 
