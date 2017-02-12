@@ -17,12 +17,18 @@ import com.mlaz.api.model.MlazProviderToService;
 import com.mlaz.api.repositories.MlazMarketPriceRepository;
 import com.mlaz.api.repositories.MlazProviderToServiceRepository;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Created by jimmy on 12/2/17.
  */
 
 @RestController
 public class MarketPriceController {
+
+    private static final Logger logger = LogManager.getLogger(MarketPriceController.class);
+
 
     @Autowired
     private MlazMarketPriceRepository mlazMarketPriceRepository;
@@ -37,11 +43,10 @@ public class MarketPriceController {
 
     @RequestMapping(value = "marketPrice/calculateMarketService")
     public void calculateMarketService() {
+        logger.info("marketPrice/calculateMarketService");
+
         Iterable<MlazProviderToService> providerToServiceList =  mlazProviderToServiceRepository.findAll();
 
-        //List<MlazProviderToService> providerToServices = new ArrayList<MlazProviderToService>();
-        //providerToServiceList.forEach(providerToServices::add);
- 
         Map<String, Double> serviceWithAvgFee = StreamSupport.stream(providerToServiceList.spliterator(), false).collect(
                             Collectors.groupingBy(MlazProviderToService::getServiceId, Collectors.averagingDouble(MlazProviderToService::getFee)));
 
@@ -56,6 +61,8 @@ public class MarketPriceController {
 
     @RequestMapping(value = "marketPrice/setMainPrice/{id}")
     public void updateStatus(@PathVariable("id") String id){
+        logger.info("marketPrice/setMainPrice/" + id);
+
         MlazMarketPrice marketPrice = mlazMarketPriceRepository.findOne(id);
 
         List<MlazMarketPrice> oldMarketPrices = mlazMarketPriceRepository.findByServiceIdAndStatus(marketPrice.getServiceId(), MarketPriceEnum.USE.toString());
