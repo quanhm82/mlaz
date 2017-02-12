@@ -6,7 +6,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import com.mlaz.api.Enum.MarketPriceEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -50,5 +52,21 @@ public class MarketPriceController {
         });
         
         mlazMarketPriceRepository.save(marketPrices);
+    }
+
+    @RequestMapping(value = "marketPrice/setMainPrice/{id}")
+    public void updateStatus(@PathVariable("id") String id){
+        MlazMarketPrice marketPrice = mlazMarketPriceRepository.findOne(id);
+
+        List<MlazMarketPrice> oldMarketPrices = mlazMarketPriceRepository.findByServiceIdAndStatus(marketPrice.getServiceId(), MarketPriceEnum.USE.toString());
+        oldMarketPrices.forEach(x -> {
+            x.setStatus(MarketPriceEnum.NOT_USE.toString());
+        });
+
+        marketPrice.setStatus(MarketPriceEnum.USE.toString());
+
+        mlazMarketPriceRepository.save(oldMarketPrices);
+
+        mlazMarketPriceRepository.save(marketPrice);
     }
 }
